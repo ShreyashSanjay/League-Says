@@ -59,13 +59,18 @@ function checkAnswer(currentLevel) {
 
 // Clicking button
 $(".btn").click(function(){
-    var userChosenChar = this.id;   
-    userClickedPattern.push(userChosenChar);
+    if (started) {
+        var userChosenChar = this.id;   
+        userClickedPattern.push(userChosenChar);
 
-    playSound(userChosenChar);
-    animatePress(userChosenChar);
+        playSound(userChosenChar);
+        animatePress(userChosenChar);
 
-    checkAnswer(userClickedPattern.length -1);
+        checkAnswer(userClickedPattern.length -1);
+    } else {
+        startOver();
+    }
+    
 }); 
 
 //Restart Game
