@@ -24,15 +24,26 @@ function nextSequence() {
     var randNum = Math.round(Math.random()*3);
     var randChar = buttonChar[randNum];
     gamePattern.push(randChar);
-    $(`#${randChar}`).fadeOut(250).fadeIn(250);
-    playSound(randChar);
+
+    // Added an interval to go through each character in squence
+    var count = 0;
+    const myInterval = setInterval(mySquence, 1000);
+    function mySquence() {
+        if (count === gamePattern.length) {
+            clearInterval(myInterval);
+        } else {
+            $(`#${gamePattern[count]}`).fadeOut(250).fadeIn(250);
+            playSound(gamePattern[count]);
+            count++;
+        }  
+    }
+    
     
 }
 
 //Checking answer
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-        console.log("pass");
 
         //Let user finish sequence
         if (userClickedPattern.length === gamePattern.length) {
@@ -42,7 +53,6 @@ function checkAnswer(currentLevel) {
         }
         
     } else {
-        console.log("fail");
 
         playSound("defeat");
         $("body").addClass("game-over");
